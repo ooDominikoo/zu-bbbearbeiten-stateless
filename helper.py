@@ -24,3 +24,6 @@ def get(index):
 
 def update(index):
     todos[index].isCompleted = not todos[index].isCompleted
+
+def delete_all():
+    todos.clear()
