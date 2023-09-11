@@ -1,4 +1,6 @@
 from dataclasses import dataclass
+import datetime
+import operator
 
 todos = []
 
@@ -6,12 +8,16 @@ todos = []
 @dataclass
 class Todo:
     title: str
+    date: datetime = "01/01/23"
     isCompleted: bool = False
 
 
-def add(title):
-    title = title.replace('b', 'bbb').replace('B', 'Bbb') #Ver-BBB-isierung
-    todos.append(Todo(title))    #Daten speichern
+def add(title, date):
+    title = title.replace("b", "bbb").replace("B", "Bbb")  # Ver-BBB-isierung
+    date = datetime.datetime.strptime(date, "%Y-%m-%d")
+    todos.append(Todo(title, date))  # Daten speichern
+
+    todos.sort(key=operator.attrgetter("date"))  # Liste sortieren, LA1620
 
 
 def get_all():
@@ -24,6 +30,7 @@ def get(index):
 
 def update(index):
     todos[index].isCompleted = not todos[index].isCompleted
+
 
 def delete_all():
     todos.clear()
